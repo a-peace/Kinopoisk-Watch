@@ -13,7 +13,6 @@
 // @grant           GM.getValue
 // @grant           GM.openInTab
 // @grant           GM.deleteValue
-// @match           *://localhost:3000/*
 // @match           *://www.kinopoisk.ru/*
 // @match           *://hd.kinopoisk.ru/*
 // @match           *://*.imdb.com/title/*
