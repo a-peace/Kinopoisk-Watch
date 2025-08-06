@@ -3,7 +3,7 @@
 // @namespace       tape-operator
 // @author          Kirlovon
 // @description     Watch movies on IMDB, TMDB, Kinopoisk and Letterboxd!
-// @version         3.2.0
+// @version         3.3.0
 // @icon            https://github.com/Kirlovon/Tape-Operator/raw/main/assets/favicon.png
 // @updateURL       https://github.com/Kirlovon/Tape-Operator/raw/main/userscript/tape-operator.user.js
 // @downloadURL     https://github.com/Kirlovon/Tape-Operator/raw/main/userscript/tape-operator.user.js
@@ -15,6 +15,7 @@
 // @grant           GM.deleteValue
 // @match           *://localhost:3000/*
 // @match           *://www.kinopoisk.ru/*
+// @match           *://hd.kinopoisk.ru/*
 // @match           *://*.imdb.com/title/*
 // @match           *://www.themoviedb.org/movie/*
 // @match           *://www.themoviedb.org/tv/*
@@ -95,6 +96,24 @@
 
 		// Kinopoisk ID
 		if (url.match(KINOPOISK_MATCHER)) {
+
+			// If its a Kinopoisk HD page
+			if (url.includes('hd.kinopoisk.ru')) {
+				try {
+					const element = document.getElementById('__NEXT_DATA__');
+					const jsonData = JSON.parse(element.innerText);
+					const apolloState = Object.values(jsonData?.props?.pageProps?.apolloState?.data || {});
+
+					const id = apolloState.find((item) => item?.__typename === 'TvSeries' || item?.__typename === 'Film')?.id;
+					if (!id) throw new Error('No ID was found in the page data');
+
+					return { kinopoisk: id, title };
+				} catch (error) {
+					console.error('Failed to extract ID from Kinopoisk HD page:', error);
+					return null;
+				}
+			}
+
 			const id = url.split('/').at(4);
 			return { kinopoisk: id, title };
 		}
@@ -158,6 +177,11 @@
 
 			// Skip default Kinopoisk title
 			if (title.startsWith('Кинопоиск.')) return null;
+
+			// Remove addition attachments on Kinopoisk HD
+			if (title.includes('— смотреть онлайн в хорошем качестве — Кинопоиск')) {
+				return title.replace('— смотреть онлайн в хорошем качестве — Кинопоиск', '').trim();
+			}
 
 			// Remove title attachment from IMDB
 			if (title.includes('⭐')) {

@@ -116,6 +116,10 @@ async function fetchSources(movieData) {
 	let playersData = response.data;
 	playersData = playersData.filter((player) => player?.iframeUrl && player?.success && player?.type);
 
+	// Put player Turbo to the end of the list (usually doesn't work)
+	const turboIndex = playersData.findIndex((player) => player.type.toLowerCase() === 'turbo');
+	if (turboIndex !== -1) playersData.push(playersData.splice(turboIndex, 1)[0]);
+	
 	return playersData;
 }
 
