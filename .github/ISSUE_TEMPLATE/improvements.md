@@ -3,7 +3,7 @@ name: Предложение по улучшению
 about: Предложение идеи для улучшение проекта.
 title: 'Предложение по улучшению'
 labels: enhancement
-assignees: Kirlovon
+assignees: a-peace
 
 ---
 
