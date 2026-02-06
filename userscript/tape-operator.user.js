@@ -2,7 +2,6 @@
 // @name            Kinopoisk Watch
 // @namespace       kinopoisk-watch
 // @author          peace
-// original author https://github.com/Kirlovon/Tape-Operator
 // @description     Watch movies on IMDB, TMDB, Kinopoisk and Letterboxd!
 // @version         3.3.3
 // @icon            https://github/a-peace/Kinopoisk-Watch/raw/main/assets/favicon.png
@@ -22,6 +21,7 @@
 // @match           *://letterboxd.com/film/*
 // @match           *://tapeop.dev/*
 // ==/UserScript==
+// original author  https://github.com/Kirlovon/Tape-Operator
 
 (function () {
 	// Current version of the script
