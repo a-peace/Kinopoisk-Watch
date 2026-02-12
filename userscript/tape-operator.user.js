@@ -3,7 +3,7 @@
 // @namespace       kinopoisk-watch
 // @author          peace
 // @description     Watch movies on IMDB, TMDB, Kinopoisk and Letterboxd!
-// @version         3.3.3
+// @version         3.3.4
 // @icon            https://github/a-peace/Kinopoisk-Watch/raw/main/assets/favicon.png
 // @updateURL       https://github/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
 // @downloadURL     https://github/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
@@ -14,6 +14,7 @@
 // @grant           GM.openInTab
 // @grant           GM.deleteValue
 // @match           *://www.kinopoisk.ru/*
+// @match           *://shiki.one/animes/*
 // @match           *://hd.kinopoisk.ru/*
 // @match           *://*.imdb.com/title/*
 // @match           *://www.themoviedb.org/movie/*
@@ -41,6 +42,7 @@
 	`;
 	// URL to the player 
 	const KINO_PLAYER_URL = 'https://www.kinopoisk.plus/film/';
+	const SHIKI_PLAYER_URL = 'https://kinops.web.app/shikimori/';
 	const OTHER_PLAYER_URL = 'https://tapeop.dev/';
 	// .cx
 	// .fun
@@ -54,7 +56,8 @@
 	const IMDB_MATCHER = /imdb\.com\/title\/tt\.*/;
 	const TMDB_MATCHER = /themoviedb\.org\/(movie|tv)\/\.*/;
 	const LETTERBOXD_MATCHER = /letterboxd\.com\/film\/\.*/;
-	const MATCHERS = [KINOPOISK_MATCHER, IMDB_MATCHER, TMDB_MATCHER, LETTERBOXD_MATCHER];
+	const SHIKI_MATCHER = /shiki\.one\/animes\/.*/;
+	const MATCHERS = [KINOPOISK_MATCHER, IMDB_MATCHER, TMDB_MATCHER, LETTERBOXD_MATCHER, SHIKI_MATCHER];
 
 	// Logging utility
 	const logger = {
@@ -172,6 +175,13 @@
 			return null;
 		}
 
+		// ID SHIKI
+		if (url.match(SHIKI_MATCHER)) {
+			const shikiId = new URL(url).pathname.match(/\/animes\/(\d+)/)?.[1];
+			if (shikiId) return { shikiId, title };
+			return null;
+		}
+
 		return null;
 	}
 
@@ -284,7 +294,11 @@
             const url = new URL(KINO_PLAYER_URL);
             url.pathname += data.kinopoisk;
             link = url.toString();
-        } else {
+        } else if (data?.shikiId) {
+			const url = new URL(SHIKI_PLAYER_URL);
+            url.pathname += data.shikiId;
+            link = url.toString();
+		} else {
             link = OTHER_PLAYER_URL;
         }
 
