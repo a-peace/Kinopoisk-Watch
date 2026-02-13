@@ -3,7 +3,7 @@
 // @namespace       kinopoisk-watch
 // @author          peace
 // @description     Watch movies on IMDB, TMDB, Kinopoisk and Letterboxd!
-// @version         3.3.4
+// @version         3.3.5
 // @icon            https://github.com/a-peace/Kinopoisk-Watch/raw/main/assets/favicon.png
 // @updateURL       https://github.com/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
 // @downloadURL     https://github.com/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
@@ -40,8 +40,8 @@
 		</defs>
 	</svg>
 	`;
-	// URL to the player 
-	const KINO_PLAYER_URL = 'https://www.kinopoisk.plus/film/';
+	// URL to the player
+	const KINO_PLAYER_URL = 'https://kinopoisk.plus/film/';
 	const SHIKI_PLAYER_URL = 'https://kinops.web.app/shikimori/';
 	const OTHER_PLAYER_URL = 'https://tapeop.dev/';
 	// .cx
@@ -153,6 +153,13 @@
 			return { tmdb: id, title };
 		}
 
+		// SHIKI ID
+		if (url.match(SHIKI_MATCHER)) {
+			const id = url.split('/').at(4).split('-').at(0);
+			if (shikiId) return { shikiId: id, title };
+			return null;
+		}
+
 		// IMDB ID from Letterboxd
 		if (url.match(LETTERBOXD_MATCHER)) {
 			const elements = document.querySelectorAll('a');
@@ -172,13 +179,6 @@
 				if (tmdbId) return { tmdbId: tmdbId, title };
 			}
 
-			return null;
-		}
-
-		// ID SHIKI
-		if (url.match(SHIKI_MATCHER)) {
-			const shikiId = new URL(url).pathname.match(/\/animes\/(\d+)/)?.[1];
-			if (shikiId) return { shikiId, title };
 			return null;
 		}
 
