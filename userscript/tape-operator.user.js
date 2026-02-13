@@ -4,9 +4,9 @@
 // @author          peace
 // @description     Watch movies on IMDB, TMDB, Kinopoisk and Letterboxd!
 // @version         3.3.4
-// @icon            https://github/a-peace/Kinopoisk-Watch/raw/main/assets/favicon.png
-// @updateURL       https://github/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
-// @downloadURL     https://github/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
+// @icon            https://github.com/a-peace/Kinopoisk-Watch/raw/main/assets/favicon.png
+// @updateURL       https://github.com/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
+// @downloadURL     https://github.com/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
 // @run-at          document-idle
 // @grant           GM.info
 // @grant           GM.setValue
