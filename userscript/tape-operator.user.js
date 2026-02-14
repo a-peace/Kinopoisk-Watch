@@ -3,7 +3,7 @@
 // @namespace       kinopoisk-watch
 // @author          peace
 // @description     Watch movies on IMDB, TMDB, Kinopoisk and Letterboxd!
-// @version         3.3.6
+// @version         3.3.7
 // @icon            https://github.com/a-peace/Kinopoisk-Watch/raw/main/assets/favicon.png
 // @updateURL       https://github.com/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
 // @downloadURL     https://github.com/a-peace/Kinopoisk-Watch/raw/main/userscript/tape-operator.user.js
@@ -14,7 +14,8 @@
 // @grant           GM.openInTab
 // @grant           GM.deleteValue
 // @match           *://www.kinopoisk.ru/*
-// @match           *://shiki.one/animes/*
+// @match           *://shiki.one/*
+// @match           *://shikimori.one/*
 // @match           *://hd.kinopoisk.ru/*
 // @match           *://*.imdb.com/title/*
 // @match           *://www.themoviedb.org/movie/*
