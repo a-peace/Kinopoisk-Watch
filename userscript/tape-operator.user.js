@@ -56,7 +56,7 @@
 	const IMDB_MATCHER = /imdb\.com\/title\/tt\.*/;
 	const TMDB_MATCHER = /themoviedb\.org\/(movie|tv)\/\.*/;
 	const LETTERBOXD_MATCHER = /letterboxd\.com\/film\/\.*/;
-	const SHIKI_MATCHER = /shiki\.one\/animes\/.*/;
+	const SHIKI_MATCHER = /shiki\.one\/animes\/\.*/;
 	const MATCHERS = [KINOPOISK_MATCHER, IMDB_MATCHER, TMDB_MATCHER, LETTERBOXD_MATCHER, SHIKI_MATCHER];
 
 	// Logging utility
