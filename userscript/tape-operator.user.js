@@ -41,12 +41,8 @@
 	</svg>
 	`;
 	// URL to the player
-	const KINO_PLAYER_URL = 'https://kinopoisk.plus/film/';
-	const SHIKI_PLAYER_URL = 'https://kinops.web.app/shikimori/';
-	const OTHER_PLAYER_URL = 'https://tapeop.dev/';
-	// .cx
-	// .fun
-	// sspoisk.ru/film/
+	const KINO_PLAYER_URL = 'https://kinops.web.app/';
+	const TAPE_PLAYER_URL = 'https://tapeop.dev/';
 
 	// ID of the banner, attached to the page
 	const BANNER_ID = 'kinopoisk-watch-banner';
@@ -84,7 +80,7 @@
 		const url = getCurrentURL();
 
 		// Skip to prevent unnecessary updates
-		if (url === previousUrl) return;
+		if (url === previousUrl && document.getElementById(BANNER_ID)) return;
 
 		// Check if URL matches
 		const urlMatches = MATCHERS.some((matcher) => url.match(matcher));
@@ -295,22 +291,15 @@
 
 		await GM.setValue('movie-data', data);
 
-        let link;
+        let player = TAPE_PLAYER_URL;
         if (data?.kinopoisk) {
-            const url = new URL(KINO_PLAYER_URL);
-            url.pathname += data.kinopoisk;
-            link = url.toString();
+            player = KINO_PLAYER_URL + 'film/' + data.kinopoisk;
         } else if (data?.shikiId) {
-			const url = new URL(SHIKI_PLAYER_URL);
-            url.pathname += data.shikiId;
-            link = url.toString();
-		} else {
-            link = OTHER_PLAYER_URL;
-        }
+			player = KINO_PLAYER_URL + 'shikimori/' + data.shikiId;
+		} 
 
-
-		logger.info('Opening player for movie', data, link);
-		GM.openInTab(link, loadInBackground);
+		logger.info('Opening player for movie', data, player);
+		GM.openInTab(player, loadInBackground);
 	}
 
 	/**
@@ -338,5 +327,5 @@
 
 	// Init player or banner
 	logger.info('Script executed');
-	(location.href.includes(KINO_PLAYER_URL) || location.href.includes(OTHER_PLAYER_URL)) ? initPlayer() : initBanner();
+	(location.href.includes(TAPE_PLAYER_URL)) ? initPlayer() : initBanner();
 })();
