@@ -156,8 +156,7 @@
 		// SHIKI ID
 		if (url.match(SHIKI_MATCHER)) {
 			const id = url.split('/').at(4).split('-').at(0);
-			if (shikiId) return { shikiId: id, title };
-			return null;
+			return { shikiId: id, title };
 		}
 
 		// IMDB ID from Letterboxd
